@@ -1,0 +1,36 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping>
+   <class name = "com.bridgelabz.ManyToOne.Employee" table = "employee1"> 
+      <id name = "id" type = "int" column = "id">
+         <generator class="native"/>
+      </id>
+      
+      <property name = "name" column = "name" type = "string"/>
+      <property name = "role" column = "role" type = "string"/>
+      <property name = "salary" column = "salary" type = "int"/>
+     
+      <many-to-one name="department" class="com.bridgelabz.ManyToOne.Department" fetch="select">
+            <column name="department_id" not-null="true" />
+        </many-to-one>
+    </class>
+   <class name = "com.bridgelabz.ManyToOne.Department" table="Department">
+            
+      <id name = "id" type = "int" column = "id">
+         <generator class="native"/>
+      </id> 
+      <property name = "department" column = "Department" type = "string"/>
+   
+      <set name="employees" table="employee1" 
+				inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="department_id" not-null="true" />
+            </key>
+            <one-to-many class="com.bridgelabz.ManyToOne.Employee" />
+        </set>
+   </class>
+   
+</hibernate-mapping>
